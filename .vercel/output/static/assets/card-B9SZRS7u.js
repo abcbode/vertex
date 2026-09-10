@@ -1,0 +1,1 @@
+import{r as e}from"./useRouter-B4RdKobV.js";import{a as t}from"./button-CyjsVFvy.js";var n=e();function r({className:e,...r}){return(0,n.jsx)(`div`,{className:t(`rounded-xl border border-border bg-card text-card-foreground`,e),...r})}function i({className:e,...r}){return(0,n.jsx)(`div`,{className:t(`p-4 pt-2`,e),...r})}export{i as n,r as t};

@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/admin/login",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "VERTEX",
+      "hasCanvas": false,
+      "bodyTextLen": 117,
+      "bodyTextHash": "b330c304d2be99f281887a5c3fe7139c393b279fc1132fc6e01acfd8e172c9cd",
+      "bodyTextPrefix": "VERTEX KHU VỰC QUẢN TRỊ Đăng nhập admin Nhập tài khoản và mật kh",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/admin-login.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "VERTEX",
+      "hasCanvas": false,
+      "bodyTextLen": 117,
+      "bodyTextHash": "b330c304d2be99f281887a5c3fe7139c393b279fc1132fc6e01acfd8e172c9cd",
+      "bodyTextPrefix": "VERTEX KHU VỰC QUẢN TRỊ Đăng nhập admin Nhập tài khoản và mật kh",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/admin-login-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/admin-login.json"
+}
