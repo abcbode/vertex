@@ -10,7 +10,7 @@ import {
   setting,
   logActivity,
 } from "./core";
-import { syncAll } from "./market";
+import { settleExpired, syncOne } from "./market";
 import { iso } from "@/lib/format";
 
 function inHours(start: string | null, end: string | null) {
@@ -33,7 +33,7 @@ export const placeTrade = createServerFn({ method: "POST" })
       direction: z.enum(["up", "down"]),
       amount: z.number().positive(),
       expirySeconds: z.number().int().positive(),
-      entryPrice: z.number().positive().optional(),
+      entryPrice: z.number().optional(),
     }),
   )
   .handler(async ({ context, data }) => {
@@ -48,10 +48,11 @@ export const placeTrade = createServerFn({ method: "POST" })
     if (data.amount > max) throw new Error("Vượt hạn mức giao dịch");
     if (wallet.balance < data.amount) throw new Error("Số dư không đủ");
 
-    await syncAll(sql, 15);
+    await syncOne(sql, data.assetId, 15);
     const asset = await sql<{
       id: number;
       current_price: string;
+      base_price: string;
       payout: string;
       is_active: boolean;
       trading_paused: boolean;
@@ -59,7 +60,7 @@ export const placeTrade = createServerFn({ method: "POST" })
       trade_end: string | null;
       symbol: string;
       decimals: number;
-    }>`select id, current_price, payout, is_active, trading_paused, trade_start, trade_end, symbol, decimals from assets where id = ${data.assetId}`;
+    }>`select id, current_price, base_price, payout, is_active, trading_paused, trade_start, trade_end, symbol, decimals from assets where id = ${data.assetId}`;
     const a = asset[0];
     if (!a || !a.is_active) throw new Error("Tài sản không khả dụng");
     if (a.trading_paused) throw new Error("Tài sản đang tạm dừng giao dịch");
@@ -69,10 +70,11 @@ export const placeTrade = createServerFn({ method: "POST" })
     if (!exp[0]) throw new Error("Thời gian lệnh không hợp lệ");
 
     const payout = n(a.payout);
-    const live = n(a.current_price);
+    const live = n(a.current_price) || n(a.base_price);
     const shown = data.entryPrice && data.entryPrice > 0 ? data.entryPrice : live;
+    if (!(live > 0) && !(shown > 0)) throw new Error("Giá thị trường chưa sẵn sàng, thử lại");
     const drift = live > 0 ? Math.abs(shown - live) / live : 0;
-    const price = drift < 0.02 ? shown : live;
+    const price = shown > 0 && (live <= 0 || drift < 0.02) ? shown : live;
     const expiresAt = new Date(Date.now() + data.expirySeconds * 1000).toISOString();
     const inserted = await sql<{ id: number }>`
       insert into trades (user_id, asset_id, direction, amount, payout, expiry_seconds, entry_price, expires_at)
@@ -184,7 +186,7 @@ export const listRunningTrades = createServerFn({ method: "GET" })
   .middleware([authMiddleware])
   .handler(async ({ context }) => {
     const sql = await getSql();
-    await syncAll(sql, 15);
+    await settleExpired(sql);
     const rows = await sql<{
       id: number;
       symbol: string;

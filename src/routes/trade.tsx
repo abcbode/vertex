@@ -46,8 +46,16 @@ function TradePage() {
   }, [assetId, tf]);
 
   useEffect(() => {
-    void load();
-    const t = setInterval(() => void load(), 1000);
+    let busy = false;
+    const tick = () => {
+      if (busy) return;
+      busy = true;
+      void load().finally(() => {
+        busy = false;
+      });
+    };
+    tick();
+    const t = setInterval(tick, 2500);
     return () => clearInterval(t);
   }, [load]);
 
@@ -76,7 +84,12 @@ function TradePage() {
 
   async function confirm() {
     if (!pending) return;
-    const freeze = freezePrice || livePrice;
+    const freeze = freezePrice > 0 ? freezePrice : livePrice;
+    if (!(freeze > 0) && !(livePrice > 0)) {
+      toast.error("Giá thị trường chưa sẵn sàng, đợi nến chạy rồi đặt lại");
+      await load();
+      return;
+    }
     try {
       const t = await placeTrade({
         data: {
@@ -84,7 +97,7 @@ function TradePage() {
           direction: pending,
           amount: amt,
           expirySeconds: expiry,
-          entryPrice: freeze,
+          ...(freeze > 0 ? { entryPrice: freeze } : {}),
         },
       });
       toast.success("Đã đặt lệnh");
@@ -216,10 +229,10 @@ function TradePage() {
               <span className="font-mono text-up tabular">{vnd(receive)}</span>
             </div>
             <div className="mt-4 grid grid-cols-2 gap-2">
-              <Button variant="up" className="h-14 text-base" onClick={() => { setFreezePrice(livePrice); setPending("up"); }} disabled={market?.asset.paused}>
+              <Button variant="up" className="h-14 text-base" onClick={() => { setFreezePrice(livePrice); setPending("up"); }} disabled={market?.asset.paused || !(livePrice > 0)}>
                 MUA / UP
               </Button>
-              <Button variant="down" className="h-14 text-base" onClick={() => { setFreezePrice(livePrice); setPending("down"); }} disabled={market?.asset.paused}>
+              <Button variant="down" className="h-14 text-base" onClick={() => { setFreezePrice(livePrice); setPending("down"); }} disabled={market?.asset.paused || !(livePrice > 0)}>
                 BÁN / DOWN
               </Button>
             </div>

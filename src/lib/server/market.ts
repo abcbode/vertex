@@ -224,12 +224,15 @@ export async function syncAsset(sql: Sql, asset: AssetRow, tf: number, now = Dat
     if (cursor < currentOpen - period * 40) cursor = currentOpen - period * 40;
   }
 
-  while (cursor < currentOpen) {
+  // Cap backfill so Vercel serverless does not time out on first visit.
+  let filled = 0;
+  while (cursor < currentOpen && filled < 12) {
     const ov = await takeOverride(sql, asset.id, tf, cursor);
     const c = genClosed(asset.id, tf, cursor, lastClose, 50, decimals, ov);
     await upsertCandle(sql, asset.id, tf, cursor, c.open, c.high, c.low, c.close);
     lastClose = c.close;
     cursor += period;
+    filled += 1;
   }
 
   const forming = await sql<{
@@ -380,6 +383,13 @@ export async function syncAll(sql: Sql, tf: number) {
   await settleExpired(sql);
 }
 
+export async function syncOne(sql: Sql, assetId: number, tf: number) {
+  const assets = await loadAssets(sql);
+  const a = assets.find((x) => x.id === assetId);
+  if (a) await syncAsset(sql, a, tf);
+  await settleExpired(sql);
+}
+
 export const getPublicTicker = createServerFn({ method: "GET" }).handler(async () => {
   const sql = await getSql();
   await syncAll(sql, 60);
@@ -389,7 +399,7 @@ export const getPublicTicker = createServerFn({ method: "GET" }).handler(async (
     const dayOpen = Math.floor(Date.now() / 60_000) * 60_000 - 60 * 60_000;
     const first = await sql<{ open: string }>`select open from candles where asset_id = ${a.id} and timeframe_seconds = 60 and open_time >= ${dayOpen} order by open_time asc limit 1`;
     const open = n(first[0]?.open ?? a.base_price);
-    const price = n(a.current_price);
+    const price = n(a.current_price) || n(a.base_price);
     const hi = await sql<{ h: string; l: string }>`select max(high) as h, min(low) as l from candles where asset_id = ${a.id} and timeframe_seconds = 60 and open_time >= ${dayOpen}`;
     out.push({
       id: a.id,
@@ -416,10 +426,14 @@ export const getMarket = createServerFn({ method: "GET" })
   .handler(async ({ data }) => {
     const sql = await getSql();
     const tf = data.timeframe || 60;
-    await syncAll(sql, tf);
-    const assets = await loadAssets(sql);
-    const asset = assets.find((a) => a.id === data.assetId) ?? assets.find((a) => a.is_active);
+    let assets = await loadAssets(sql);
+    let asset = assets.find((a) => a.id === data.assetId) ?? assets.find((a) => a.is_active);
     if (!asset) throw new Error("Không có tài sản");
+    await syncAsset(sql, asset, tf);
+    await settleExpired(sql);
+    assets = await loadAssets(sql);
+    asset = assets.find((a) => a.id === asset!.id) ?? asset;
+    const price = n(asset.current_price) || n(asset.base_price);
     const candles = await sql<{
       open_time: number;
       open: string;
@@ -435,16 +449,16 @@ export const getMarket = createServerFn({ method: "GET" })
       id: a.id,
       symbol: a.symbol,
       name: a.name,
-      price: n(a.current_price),
+      price: n(a.current_price) || n(a.base_price),
       decimals: a.decimals,
       payout: n(a.payout),
       upRatio: n(a.up_ratio),
       isActive: a.is_active,
       paused: a.trading_paused,
       change: 0,
-      open: n(a.current_price),
-      high: n(a.current_price),
-      low: n(a.current_price),
+      open: n(a.current_price) || n(a.base_price),
+      high: n(a.current_price) || n(a.base_price),
+      low: n(a.current_price) || n(a.base_price),
     }));
     const mapped: Candle[] = candles
       .slice()
@@ -457,12 +471,13 @@ export const getMarket = createServerFn({ method: "GET" })
         close: n(c.close),
       }));
     const last = mapped[mapped.length - 1];
+    const live = last?.close || price;
     return {
       asset: {
         id: asset.id,
         symbol: asset.symbol,
         name: asset.name,
-        price: n(asset.current_price),
+        price: live,
         decimals: asset.decimals,
         payout: n(asset.payout),
         paused: asset.trading_paused,
@@ -471,7 +486,7 @@ export const getMarket = createServerFn({ method: "GET" })
       },
       ohlc: last
         ? { open: last.open, high: last.high, low: last.low, close: last.close }
-        : { open: n(asset.current_price), high: n(asset.current_price), low: n(asset.current_price), close: n(asset.current_price) },
+        : { open: price, high: price, low: price, close: price },
       candles: mapped,
       assets: list,
       timeframes: tfs,
@@ -519,7 +534,7 @@ export const getAdminMarket = createServerFn({ method: "GET" })
         id: a.id,
         symbol: a.symbol,
         name: a.name,
-        price: n(a.current_price),
+        price: n(a.current_price) || n(a.base_price),
         decimals: a.decimals,
         payout: n(a.payout),
         upRatio: n(a.up_ratio),
