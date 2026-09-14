@@ -134,6 +134,26 @@ function genClosed(
   return { open, high, low, close };
 }
 
+/** Previous bar that CLOSES at `nextOpen` so history stitches onto live candles. */
+function genClosedBackward(
+  assetId: number,
+  tf: number,
+  openTime: number,
+  nextOpen: number,
+  decimals: number,
+) {
+  const rng = mulberry32((assetId * 1000003 + tf * 9176 + Math.floor(openTime / 1000)) >>> 0);
+  const dir = rng() < 0.5 ? 1 : -1;
+  const vol = volOf(nextOpen || 1);
+  const change = vol * (0.35 + rng() * 1.1) * dir;
+  const close = nextOpen;
+  const open = roundp(Math.max(close * 0.0001, close - change), decimals);
+  const wick = vol * (0.15 + rng() * 0.7);
+  const high = roundp(Math.max(open, close) + wick, decimals);
+  const low = roundp(Math.min(open, close) - wick * (0.4 + rng() * 0.6), decimals);
+  return { open, high, low, close };
+}
+
 type AssetRow = {
   id: number;
   symbol: string;
@@ -390,6 +410,81 @@ export async function syncOne(sql: Sql, assetId: number, tf: number) {
   await settleExpired(sql);
 }
 
+/** Fill older bars backward from the live chain so history stays on the same price path. */
+export async function fillHistory(sql: Sql, asset: AssetRow, tf: number, want = 160) {
+  const decimals = asset.decimals;
+  const period = tf * 1000;
+  const currentOpen = Math.floor(Date.now() / period) * period;
+  const targetStart = currentOpen - period * want;
+
+  const recent = await sql<{ open_time: number; open: string; close: string }>`
+    select open_time, open, close from candles
+    where asset_id = ${asset.id} and timeframe_seconds = ${tf}
+    order by open_time desc limit 120`;
+  if (!recent[0]) return;
+
+  let expected = Number(recent[0].open_time);
+  let nextOpen = n(recent[0].open);
+  let anchorTime = expected;
+  for (const r of recent) {
+    const t = Number(r.open_time);
+    if (t !== expected) break;
+    const close = n(r.close);
+    if (t !== Number(recent[0].open_time)) {
+      const ref = nextOpen || 1;
+      if (Math.abs(close - ref) / ref > 0.012) break;
+    }
+    nextOpen = n(r.open);
+    anchorTime = t;
+    expected -= period;
+  }
+
+  await sql`delete from candles
+    where asset_id = ${asset.id} and timeframe_seconds = ${tf} and open_time < ${anchorTime}`;
+
+  let cursor = anchorTime;
+  let filled = 0;
+  while (cursor - period >= targetStart && filled < 48) {
+    const t = cursor - period;
+    const c = genClosedBackward(asset.id, tf, t, nextOpen, decimals);
+    await upsertCandle(sql, asset.id, tf, t, c.open, c.high, c.low, c.close);
+    nextOpen = c.open;
+    cursor = t;
+    filled += 1;
+  }
+}
+
+export const getCandleHistory = createServerFn({ method: "GET" })
+  .middleware([authMiddleware])
+  .validator((d: { assetId: number; timeframe: number }) => d)
+  .handler(async ({ data }) => {
+    const sql = await getSql();
+    const tf = data.timeframe || 60;
+    const assets = await loadAssets(sql);
+    const asset = assets.find((a) => a.id === data.assetId) ?? assets.find((a) => a.is_active);
+    if (!asset) throw new Error("Không có tài sản");
+    await fillHistory(sql, asset, tf, 180);
+    const rows = await sql<{
+      open_time: number;
+      open: string;
+      high: string;
+      low: string;
+      close: string;
+    }>`select open_time, open, high, low, close from candles
+       where asset_id = ${asset.id} and timeframe_seconds = ${tf}
+       order by open_time desc limit 200`;
+    return rows
+      .slice()
+      .reverse()
+      .map((c) => ({
+        time: Number(c.open_time),
+        open: n(c.open),
+        high: n(c.high),
+        low: n(c.low),
+        close: n(c.close),
+      })) as Candle[];
+  });
+
 export const getPublicTicker = createServerFn({ method: "GET" }).handler(async () => {
   const sql = await getSql();
   await syncAll(sql, 60);
@@ -442,7 +537,7 @@ export const getMarket = createServerFn({ method: "GET" })
       close: string;
     }>`select open_time, open, high, low, close from candles
        where asset_id = ${asset.id} and timeframe_seconds = ${tf}
-       order by open_time desc limit 80`;
+       order by open_time desc limit 200`;
     const tfs = await sql<{ seconds: number; label: string }>`select seconds, label from timeframes where is_active = true order by seconds`;
     const exps = await sql<{ seconds: number; label: string }>`select seconds, label from expiries where is_active = true order by seconds`;
     const list: AssetPublic[] = assets.filter((a) => a.is_active).map((a) => ({

@@ -9,7 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { countdown, priceFmt, vnd } from "@/lib/format";
-import { getMarket } from "@/lib/server/market";
+import { getCandleHistory, getMarket, type Candle } from "@/lib/server/market";
 import { listRunningTrades, placeTrade } from "@/lib/server/trade";
 import { cn } from "@/lib/utils";
 
@@ -33,6 +33,7 @@ function TradePage() {
   const [pending, setPending] = useState<"up" | "down" | null>(null);
   const [freezePrice, setFreezePrice] = useState(0);
   const [now, setNow] = useState(Date.now());
+  const [history, setHistory] = useState<Candle[]>([]);
 
   const load = useCallback(async () => {
     try {
@@ -58,6 +59,23 @@ function TradePage() {
     const t = setInterval(tick, 2500);
     return () => clearInterval(t);
   }, [load]);
+
+  useEffect(() => {
+    setHistory([]);
+    void getCandleHistory({ data: { assetId, timeframe: tf } })
+      .then(setHistory)
+      .catch(() => {});
+  }, [assetId, tf]);
+
+  const loadHistory = useCallback(() => {
+    void getCandleHistory({ data: { assetId, timeframe: tf } })
+      .then((rows) => setHistory((prev) => {
+        const map = new Map(prev.map((c) => [c.time, c]));
+        for (const c of rows) map.set(c.time, c);
+        return [...map.values()].sort((a, b) => a.time - b.time);
+      }))
+      .catch(() => {});
+  }, [assetId, tf]);
 
   useEffect(() => {
     const t = setInterval(() => setNow(Date.now()), 250);
@@ -174,8 +192,11 @@ function TradePage() {
           <div className="min-h-72 flex-1">
             <CandleChart
               candles={market?.candles ?? []}
+              history={history}
               decimals={liveDecimals}
               levels={entryLevels}
+              onNeedHistory={loadHistory}
+              resetKey={`${assetId}-${tf}`}
             />
           </div>
         </div>
