@@ -25,18 +25,18 @@ import { adminPing, prepareAdminLogin } from "@/lib/server/admin";
 import { cn } from "@/lib/utils";
 
 const ITEMS = [
-  { to: "/admin", label: "Dashboard", icon: Gauge },
-  { to: "/admin/results", label: "Chỉnh kết quả", icon: SlidersHorizontal },
-  { to: "/admin/users", label: "User", icon: Users },
-  { to: "/admin/deposits", label: "Nạp tiền", icon: ArrowDownToLine },
-  { to: "/admin/withdrawals", label: "Rút tiền", icon: ArrowUpFromLine },
-  { to: "/admin/trade", label: "Trade", icon: CandlestickChart },
-  { to: "/admin/banks", label: "Ngân hàng", icon: Building2 },
-  { to: "/admin/qr", label: "QR Code", icon: QrCode },
-  { to: "/admin/support", label: "CSKH", icon: Headset },
-  { to: "/admin/notifications", label: "Thông báo", icon: Bell },
-  { to: "/admin/reports", label: "Báo cáo", icon: BarChart3 },
-  { to: "/admin/settings", label: "Cài đặt", icon: Settings },
+  { to: "/bode", label: "Dashboard", icon: Gauge },
+  { to: "/bode/results", label: "Chỉnh kết quả", icon: SlidersHorizontal },
+  { to: "/bode/users", label: "User", icon: Users },
+  { to: "/bode/deposits", label: "Nạp tiền", icon: ArrowDownToLine },
+  { to: "/bode/withdrawals", label: "Rút tiền", icon: ArrowUpFromLine },
+  { to: "/bode/trade", label: "Trade", icon: CandlestickChart },
+  { to: "/bode/banks", label: "Ngân hàng", icon: Building2 },
+  { to: "/bode/qr", label: "QR Code", icon: QrCode },
+  { to: "/bode/support", label: "CSKH", icon: Headset },
+  { to: "/bode/notifications", label: "Thông báo", icon: Bell },
+  { to: "/bode/reports", label: "Báo cáo", icon: BarChart3 },
+  { to: "/bode/settings", label: "Cài đặt", icon: Settings },
 ] as const;
 
 export function AdminShell({ children }: { children: ReactNode }) {
@@ -64,11 +64,11 @@ export function AdminShell({ children }: { children: ReactNode }) {
       .catch(() => setGate("no"));
   }, [user, isPending, path]);
 
-  if (gate === "2fa" && path !== "/admin/verify") {
-    return <Navigate to="/admin/verify" />;
+  if (gate === "2fa" && path !== "/bode/verify") {
+    return <Navigate to="/bode/verify" />;
   }
 
-  const isAdmin = gate === "ok" || (gate === "2fa" && path === "/admin/verify");
+  const isAdmin = gate === "ok" || (gate === "2fa" && path === "/bode/verify");
   if (!isAdmin) {
     return <AdminLoginForm onSuccess={() => setGate("ok")} />;
   }
@@ -77,7 +77,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
     <nav className="flex flex-col gap-1 p-3">
       {ITEMS.map((it) => {
         const Icon = it.icon;
-        const on = it.to === "/admin" ? path === "/admin" || path === "/admin/" : path.startsWith(it.to);
+        const on = it.to === "/bode" ? path === "/bode" || path === "/bode/" : path.startsWith(it.to);
         return (
           <Link
             key={it.to}
@@ -116,7 +116,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
             <button
               type="button"
               className="text-sm text-muted-foreground hover:text-foreground"
-              onClick={() => void signOut("/admin")}
+              onClick={() => void signOut("/bode")}
             >
               Đăng xuất
             </button>
