@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { verifyAdmin2fa } from "@/lib/server/admin";
 
-export const Route = createFileRoute("/admin/verify")({ component: Verify });
+export const Route = createFileRoute("/bode/verify")({ component: Verify });
 
 function Verify() {
   const nav = useNavigate();
@@ -19,7 +19,7 @@ function Verify() {
           e.preventDefault();
           try {
             await verifyAdmin2fa({ data: { code } });
-            nav({ to: "/admin" });
+            nav({ to: "/bode" });
           } catch (err) {
             toast.error(err instanceof Error ? err.message : "Sai mã");
           }

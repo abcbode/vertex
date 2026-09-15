@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { STATUS_LABEL, vnd } from "@/lib/format";
 import { listAdminDeposits, reviewDeposit } from "@/lib/server/admin";
 
-export const Route = createFileRoute("/admin/deposits")({ component: Deposits });
+export const Route = createFileRoute("/bode/deposits")({ component: Deposits });
 
 function Deposits() {
   const [status, setStatus] = useState("pending");

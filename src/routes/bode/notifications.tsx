@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { deleteNotification, listNotificationsAdmin, saveNotification } from "@/lib/server/cms";
 
-export const Route = createFileRoute("/admin/notifications")({ component: NotiAdmin });
+export const Route = createFileRoute("/bode/notifications")({ component: NotiAdmin });
 
 function NotiAdmin() {
   const [rows, setRows] = useState<Awaited<ReturnType<typeof listNotificationsAdmin>>>([]);

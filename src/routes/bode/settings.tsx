@@ -9,7 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { confirmAdmin2fa, disableAdmin2fa, exportBackup, getSettings, listErrors, saveSettings, setupAdmin2fa } from "@/lib/server/admin";
 import { authClient } from "@/lib/auth/client";
 
-export const Route = createFileRoute("/admin/settings")({ component: SettingsPage });
+export const Route = createFileRoute("/bode/settings")({ component: SettingsPage });
 
 function SettingsPage() {
   const [s, setS] = useState<Record<string, string>>({});

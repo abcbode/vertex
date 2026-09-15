@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { VN_BANKS } from "@/lib/format";
 import { listBanksAdmin, saveBank, toggleBank } from "@/lib/server/admin";
 
-export const Route = createFileRoute("/admin/banks")({ component: Banks });
+export const Route = createFileRoute("/bode/banks")({ component: Banks });
 
 function Banks() {
   const [rows, setRows] = useState<Awaited<ReturnType<typeof listBanksAdmin>>>([]);

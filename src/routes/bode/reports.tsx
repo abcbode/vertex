@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { vnd } from "@/lib/format";
 import { getDashboard, listActivity } from "@/lib/server/admin";
 
-export const Route = createFileRoute("/admin/reports")({ component: Reports });
+export const Route = createFileRoute("/bode/reports")({ component: Reports });
 
 function Reports() {
   const [d, setD] = useState<Awaited<ReturnType<typeof getDashboard>> | null>(null);

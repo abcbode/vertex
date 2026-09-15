@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { priceFmt, vnd } from "@/lib/format";
 import { listAssetsAdmin, listTradesAdmin, saveAsset, toggleAsset, toggleTf } from "@/lib/server/admin";
 
-export const Route = createFileRoute("/admin/trade")({ component: TradeAdmin });
+export const Route = createFileRoute("/bode/trade")({ component: TradeAdmin });
 
 function TradeAdmin() {
   const [data, setData] = useState<Awaited<ReturnType<typeof listAssetsAdmin>> | null>(null);

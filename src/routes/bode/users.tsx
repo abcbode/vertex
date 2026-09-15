@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { vnd } from "@/lib/format";
 import { listUsers, resetUserPassword, setUserStatus } from "@/lib/server/admin";
 
-export const Route = createFileRoute("/admin/users")({ component: UsersPage });
+export const Route = createFileRoute("/bode/users")({ component: UsersPage });
 
 function UsersPage() {
   const [q, setQ] = useState("");
@@ -50,7 +50,7 @@ function UsersPage() {
             {(data?.rows ?? []).map((u) => (
               <tr key={u.userId} className="border-t border-border">
                 <td className="p-2">
-                  <Link to="/admin/users/$userId" params={{ userId: u.userId }} className="hover:underline">
+                  <Link to="/bode/users/$userId" params={{ userId: u.userId }} className="hover:underline">
                     {u.email}
                   </Link>
                   <div className="text-xs text-muted-foreground">{u.displayName} · {u.role}</div>

@@ -34,11 +34,11 @@ export function AdminLoginForm({ onSuccess }: { onSuccess?: () => void }) {
       const p = await adminPing();
       if (!p.isAdmin) throw new Error("Sai tài khoản hoặc mật khẩu");
       if (!p.twoFaOk) {
-        nav({ to: "/admin/verify" });
+        nav({ to: "/bode/verify" });
         return;
       }
       onSuccess?.();
-      nav({ to: "/admin" });
+      nav({ to: "/bode" });
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Đăng nhập thất bại");
     } finally {

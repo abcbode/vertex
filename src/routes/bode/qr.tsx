@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { listBanksAdmin, listQrAdmin, saveQr, toggleQr } from "@/lib/server/admin";
 import { getSettings, saveSettings } from "@/lib/server/admin";
 
-export const Route = createFileRoute("/admin/qr")({ component: QrPage });
+export const Route = createFileRoute("/bode/qr")({ component: QrPage });
 
 function QrPage() {
   const [rows, setRows] = useState<Awaited<ReturnType<typeof listQrAdmin>>>([]);

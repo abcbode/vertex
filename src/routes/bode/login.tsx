@@ -4,7 +4,7 @@ import { AdminLoginForm } from "@/components/admin-login-form";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { adminPing, prepareAdminLogin } from "@/lib/server/admin";
 
-export const Route = createFileRoute("/admin/login")({ component: AdminLogin });
+export const Route = createFileRoute("/bode/login")({ component: AdminLogin });
 
 function AdminLogin() {
   const { user, isPending } = useCurrentUserState();
@@ -23,6 +23,6 @@ function AdminLogin() {
       .catch(() => {});
   }, [user, isPending]);
 
-  if (alreadyAdmin) return <Navigate to="/admin" />;
+  if (alreadyAdmin) return <Navigate to="/bode" />;
   return <AdminLoginForm />;
 }

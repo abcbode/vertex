@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { vnd } from "@/lib/format";
 import { getDashboard } from "@/lib/server/admin";
 
-export const Route = createFileRoute("/admin/")({ component: Dash });
+export const Route = createFileRoute("/bode/")({ component: Dash });
 
 function Stat({ label, value, tone }: { label: string; value: string; tone?: string }) {
   return (

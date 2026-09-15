@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { STATUS_LABEL, vnd } from "@/lib/format";
 import { listAdminWithdrawals, reviewWithdraw } from "@/lib/server/admin";
 
-export const Route = createFileRoute("/admin/withdrawals")({ component: Withdrawals });
+export const Route = createFileRoute("/bode/withdrawals")({ component: Withdrawals });
 
 function Withdrawals() {
   const [status, setStatus] = useState("pending");

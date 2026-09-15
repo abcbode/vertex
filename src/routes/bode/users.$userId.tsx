@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { vnd } from "@/lib/format";
 import { getUserAdmin, resetUserPassword, setUserRole, setUserStatus } from "@/lib/server/admin";
 
-export const Route = createFileRoute("/admin/users/$userId")({ component: UserDetail });
+export const Route = createFileRoute("/bode/users/$userId")({ component: UserDetail });
 
 function UserDetail() {
   const { userId } = Route.useParams();
@@ -22,7 +22,7 @@ function UserDetail() {
   if (!u) return <AdminShell>Đang tải…</AdminShell>;
   return (
     <AdminShell>
-      <Link to="/admin/users" className="text-sm text-muted-foreground">← Danh sách</Link>
+      <Link to="/bode/users" className="text-sm text-muted-foreground">← Danh sách</Link>
       <h1 className="mt-2 text-xl font-semibold">{u.email}</h1>
       <p className="text-sm text-muted-foreground">{u.displayName} · {u.phone || "chưa có SĐT"} · {u.role}</p>
       <div className="mt-4 grid gap-3 sm:grid-cols-3">

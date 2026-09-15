@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { countdown, priceFmt, vnd } from "@/lib/format";
 import { forceCandle, getAdminMarket, setUpRatio } from "@/lib/server/market";
 
-export const Route = createFileRoute("/admin/results")({ component: Results });
+export const Route = createFileRoute("/bode/results")({ component: Results });
 
 function Results() {
   const [data, setData] = useState<Awaited<ReturnType<typeof getAdminMarket>> | null>(null);

@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { listSupportAdmin, saveSupport, toggleSupport } from "@/lib/server/cms";
 
-export const Route = createFileRoute("/admin/support")({ component: SupportAdmin });
+export const Route = createFileRoute("/bode/support")({ component: SupportAdmin });
 
 function SupportAdmin() {
   const [rows, setRows] = useState<Awaited<ReturnType<typeof listSupportAdmin>>>([]);
