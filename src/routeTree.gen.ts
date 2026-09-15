@@ -11,7 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccountRouteImport } from './routes/account'
-import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AdminRouteImport } from './routes/bode'
 import { Route as DepositRouteImport } from './routes/deposit'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as HistoryRouteImport } from './routes/history'
@@ -23,21 +23,21 @@ import { Route as SupportRouteImport } from './routes/support'
 import { Route as TradeRouteImport } from './routes/trade'
 import { Route as WalletRouteImport } from './routes/wallet'
 import { Route as WithdrawRouteImport } from './routes/withdraw'
-import { Route as AdminIndexRouteImport } from './routes/admin/index'
-import { Route as AdminBanksRouteImport } from './routes/admin/banks'
-import { Route as AdminDepositsRouteImport } from './routes/admin/deposits'
-import { Route as AdminLoginRouteImport } from './routes/admin/login'
-import { Route as AdminNotificationsRouteImport } from './routes/admin/notifications'
-import { Route as AdminQrRouteImport } from './routes/admin/qr'
-import { Route as AdminReportsRouteImport } from './routes/admin/reports'
-import { Route as AdminResultsRouteImport } from './routes/admin/results'
-import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
-import { Route as AdminSupportRouteImport } from './routes/admin/support'
-import { Route as AdminTradeRouteImport } from './routes/admin/trade'
-import { Route as AdminUsersRouteImport } from './routes/admin/users'
-import { Route as AdminVerifyRouteImport } from './routes/admin/verify'
-import { Route as AdminWithdrawalsRouteImport } from './routes/admin/withdrawals'
-import { Route as AdminUsersUserIdRouteImport } from './routes/admin/users.$userId'
+import { Route as AdminIndexRouteImport } from './routes/bode/index'
+import { Route as AdminBanksRouteImport } from './routes/bode/banks'
+import { Route as AdminDepositsRouteImport } from './routes/bode/deposits'
+import { Route as AdminLoginRouteImport } from './routes/bode/login'
+import { Route as AdminNotificationsRouteImport } from './routes/bode/notifications'
+import { Route as AdminQrRouteImport } from './routes/bode/qr'
+import { Route as AdminReportsRouteImport } from './routes/bode/reports'
+import { Route as AdminResultsRouteImport } from './routes/bode/results'
+import { Route as AdminSettingsRouteImport } from './routes/bode/settings'
+import { Route as AdminSupportRouteImport } from './routes/bode/support'
+import { Route as AdminTradeRouteImport } from './routes/bode/trade'
+import { Route as AdminUsersRouteImport } from './routes/bode/users'
+import { Route as AdminVerifyRouteImport } from './routes/bode/verify'
+import { Route as AdminWithdrawalsRouteImport } from './routes/bode/withdrawals'
+import { Route as AdminUsersUserIdRouteImport } from './routes/bode/users.$userId'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -51,8 +51,8 @@ const AccountRoute = AccountRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
+  id: '/bode',
+  path: '/bode',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DepositRoute = DepositRouteImport.update({
@@ -194,7 +194,7 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
-  '/admin': typeof AdminRouteWithChildren
+  '/bode': typeof AdminRouteWithChildren
   '/deposit': typeof DepositRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/history': typeof HistoryRoute
@@ -206,21 +206,21 @@ export interface FileRoutesByFullPath {
   '/trade': typeof TradeRoute
   '/wallet': typeof WalletRoute
   '/withdraw': typeof WithdrawRoute
-  '/admin/banks': typeof AdminBanksRoute
-  '/admin/deposits': typeof AdminDepositsRoute
-  '/admin/login': typeof AdminLoginRoute
-  '/admin/notifications': typeof AdminNotificationsRoute
-  '/admin/qr': typeof AdminQrRoute
-  '/admin/reports': typeof AdminReportsRoute
-  '/admin/results': typeof AdminResultsRoute
-  '/admin/settings': typeof AdminSettingsRoute
-  '/admin/support': typeof AdminSupportRoute
-  '/admin/trade': typeof AdminTradeRoute
-  '/admin/users': typeof AdminUsersRouteWithChildren
-  '/admin/verify': typeof AdminVerifyRoute
-  '/admin/withdrawals': typeof AdminWithdrawalsRoute
-  '/admin/': typeof AdminIndexRoute
-  '/admin/users/$userId': typeof AdminUsersUserIdRoute
+  '/bode/banks': typeof AdminBanksRoute
+  '/bode/deposits': typeof AdminDepositsRoute
+  '/bode/login': typeof AdminLoginRoute
+  '/bode/notifications': typeof AdminNotificationsRoute
+  '/bode/qr': typeof AdminQrRoute
+  '/bode/reports': typeof AdminReportsRoute
+  '/bode/results': typeof AdminResultsRoute
+  '/bode/settings': typeof AdminSettingsRoute
+  '/bode/support': typeof AdminSupportRoute
+  '/bode/trade': typeof AdminTradeRoute
+  '/bode/users': typeof AdminUsersRouteWithChildren
+  '/bode/verify': typeof AdminVerifyRoute
+  '/bode/withdrawals': typeof AdminWithdrawalsRoute
+  '/bode/': typeof AdminIndexRoute
+  '/bode/users/$userId': typeof AdminUsersUserIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
@@ -237,28 +237,28 @@ export interface FileRoutesByTo {
   '/trade': typeof TradeRoute
   '/wallet': typeof WalletRoute
   '/withdraw': typeof WithdrawRoute
-  '/admin/banks': typeof AdminBanksRoute
-  '/admin/deposits': typeof AdminDepositsRoute
-  '/admin/login': typeof AdminLoginRoute
-  '/admin/notifications': typeof AdminNotificationsRoute
-  '/admin/qr': typeof AdminQrRoute
-  '/admin/reports': typeof AdminReportsRoute
-  '/admin/results': typeof AdminResultsRoute
-  '/admin/settings': typeof AdminSettingsRoute
-  '/admin/support': typeof AdminSupportRoute
-  '/admin/trade': typeof AdminTradeRoute
-  '/admin/users': typeof AdminUsersRouteWithChildren
-  '/admin/verify': typeof AdminVerifyRoute
-  '/admin/withdrawals': typeof AdminWithdrawalsRoute
-  '/admin': typeof AdminIndexRoute
-  '/admin/users/$userId': typeof AdminUsersUserIdRoute
+  '/bode/banks': typeof AdminBanksRoute
+  '/bode/deposits': typeof AdminDepositsRoute
+  '/bode/login': typeof AdminLoginRoute
+  '/bode/notifications': typeof AdminNotificationsRoute
+  '/bode/qr': typeof AdminQrRoute
+  '/bode/reports': typeof AdminReportsRoute
+  '/bode/results': typeof AdminResultsRoute
+  '/bode/settings': typeof AdminSettingsRoute
+  '/bode/support': typeof AdminSupportRoute
+  '/bode/trade': typeof AdminTradeRoute
+  '/bode/users': typeof AdminUsersRouteWithChildren
+  '/bode/verify': typeof AdminVerifyRoute
+  '/bode/withdrawals': typeof AdminWithdrawalsRoute
+  '/bode': typeof AdminIndexRoute
+  '/bode/users/$userId': typeof AdminUsersUserIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
-  '/admin': typeof AdminRouteWithChildren
+  '/bode': typeof AdminRouteWithChildren
   '/deposit': typeof DepositRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/history': typeof HistoryRoute
@@ -270,21 +270,21 @@ export interface FileRoutesById {
   '/trade': typeof TradeRoute
   '/wallet': typeof WalletRoute
   '/withdraw': typeof WithdrawRoute
-  '/admin/banks': typeof AdminBanksRoute
-  '/admin/deposits': typeof AdminDepositsRoute
-  '/admin/login': typeof AdminLoginRoute
-  '/admin/notifications': typeof AdminNotificationsRoute
-  '/admin/qr': typeof AdminQrRoute
-  '/admin/reports': typeof AdminReportsRoute
-  '/admin/results': typeof AdminResultsRoute
-  '/admin/settings': typeof AdminSettingsRoute
-  '/admin/support': typeof AdminSupportRoute
-  '/admin/trade': typeof AdminTradeRoute
-  '/admin/users': typeof AdminUsersRouteWithChildren
-  '/admin/verify': typeof AdminVerifyRoute
-  '/admin/withdrawals': typeof AdminWithdrawalsRoute
-  '/admin/': typeof AdminIndexRoute
-  '/admin/users/$userId': typeof AdminUsersUserIdRoute
+  '/bode/banks': typeof AdminBanksRoute
+  '/bode/deposits': typeof AdminDepositsRoute
+  '/bode/login': typeof AdminLoginRoute
+  '/bode/notifications': typeof AdminNotificationsRoute
+  '/bode/qr': typeof AdminQrRoute
+  '/bode/reports': typeof AdminReportsRoute
+  '/bode/results': typeof AdminResultsRoute
+  '/bode/settings': typeof AdminSettingsRoute
+  '/bode/support': typeof AdminSupportRoute
+  '/bode/trade': typeof AdminTradeRoute
+  '/bode/users': typeof AdminUsersRouteWithChildren
+  '/bode/verify': typeof AdminVerifyRoute
+  '/bode/withdrawals': typeof AdminWithdrawalsRoute
+  '/bode/': typeof AdminIndexRoute
+  '/bode/users/$userId': typeof AdminUsersUserIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
@@ -292,7 +292,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/account'
-    | '/admin'
+    | '/bode'
     | '/deposit'
     | '/forgot-password'
     | '/history'
@@ -304,21 +304,21 @@ export interface FileRouteTypes {
     | '/trade'
     | '/wallet'
     | '/withdraw'
-    | '/admin/banks'
-    | '/admin/deposits'
-    | '/admin/login'
-    | '/admin/notifications'
-    | '/admin/qr'
-    | '/admin/reports'
-    | '/admin/results'
-    | '/admin/settings'
-    | '/admin/support'
-    | '/admin/trade'
-    | '/admin/users'
-    | '/admin/verify'
-    | '/admin/withdrawals'
-    | '/admin/'
-    | '/admin/users/$userId'
+    | '/bode/banks'
+    | '/bode/deposits'
+    | '/bode/login'
+    | '/bode/notifications'
+    | '/bode/qr'
+    | '/bode/reports'
+    | '/bode/results'
+    | '/bode/settings'
+    | '/bode/support'
+    | '/bode/trade'
+    | '/bode/users'
+    | '/bode/verify'
+    | '/bode/withdrawals'
+    | '/bode/'
+    | '/bode/users/$userId'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -335,27 +335,27 @@ export interface FileRouteTypes {
     | '/trade'
     | '/wallet'
     | '/withdraw'
-    | '/admin/banks'
-    | '/admin/deposits'
-    | '/admin/login'
-    | '/admin/notifications'
-    | '/admin/qr'
-    | '/admin/reports'
-    | '/admin/results'
-    | '/admin/settings'
-    | '/admin/support'
-    | '/admin/trade'
-    | '/admin/users'
-    | '/admin/verify'
-    | '/admin/withdrawals'
-    | '/admin'
-    | '/admin/users/$userId'
+    | '/bode/banks'
+    | '/bode/deposits'
+    | '/bode/login'
+    | '/bode/notifications'
+    | '/bode/qr'
+    | '/bode/reports'
+    | '/bode/results'
+    | '/bode/settings'
+    | '/bode/support'
+    | '/bode/trade'
+    | '/bode/users'
+    | '/bode/verify'
+    | '/bode/withdrawals'
+    | '/bode'
+    | '/bode/users/$userId'
     | '/api/auth/$'
   id:
     | '__root__'
     | '/'
     | '/account'
-    | '/admin'
+    | '/bode'
     | '/deposit'
     | '/forgot-password'
     | '/history'
@@ -367,21 +367,21 @@ export interface FileRouteTypes {
     | '/trade'
     | '/wallet'
     | '/withdraw'
-    | '/admin/banks'
-    | '/admin/deposits'
-    | '/admin/login'
-    | '/admin/notifications'
-    | '/admin/qr'
-    | '/admin/reports'
-    | '/admin/results'
-    | '/admin/settings'
-    | '/admin/support'
-    | '/admin/trade'
-    | '/admin/users'
-    | '/admin/verify'
-    | '/admin/withdrawals'
-    | '/admin/'
-    | '/admin/users/$userId'
+    | '/bode/banks'
+    | '/bode/deposits'
+    | '/bode/login'
+    | '/bode/notifications'
+    | '/bode/qr'
+    | '/bode/reports'
+    | '/bode/results'
+    | '/bode/settings'
+    | '/bode/support'
+    | '/bode/trade'
+    | '/bode/users'
+    | '/bode/verify'
+    | '/bode/withdrawals'
+    | '/bode/'
+    | '/bode/users/$userId'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
@@ -419,10 +419,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
+    '/bode': {
+      id: '/bode'
+      path: '/bode'
+      fullPath: '/bode'
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -503,108 +503,108 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WithdrawRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/': {
-      id: '/admin/'
+    '/bode/': {
+      id: '/bode/'
       path: '/'
-      fullPath: '/admin/'
+      fullPath: '/bode/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/banks': {
-      id: '/admin/banks'
+    '/bode/banks': {
+      id: '/bode/banks'
       path: '/banks'
-      fullPath: '/admin/banks'
+      fullPath: '/bode/banks'
       preLoaderRoute: typeof AdminBanksRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/deposits': {
-      id: '/admin/deposits'
+    '/bode/deposits': {
+      id: '/bode/deposits'
       path: '/deposits'
-      fullPath: '/admin/deposits'
+      fullPath: '/bode/deposits'
       preLoaderRoute: typeof AdminDepositsRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/login': {
-      id: '/admin/login'
+    '/bode/login': {
+      id: '/bode/login'
       path: '/login'
-      fullPath: '/admin/login'
+      fullPath: '/bode/login'
       preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/notifications': {
-      id: '/admin/notifications'
+    '/bode/notifications': {
+      id: '/bode/notifications'
       path: '/notifications'
-      fullPath: '/admin/notifications'
+      fullPath: '/bode/notifications'
       preLoaderRoute: typeof AdminNotificationsRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/qr': {
-      id: '/admin/qr'
+    '/bode/qr': {
+      id: '/bode/qr'
       path: '/qr'
-      fullPath: '/admin/qr'
+      fullPath: '/bode/qr'
       preLoaderRoute: typeof AdminQrRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/reports': {
-      id: '/admin/reports'
+    '/bode/reports': {
+      id: '/bode/reports'
       path: '/reports'
-      fullPath: '/admin/reports'
+      fullPath: '/bode/reports'
       preLoaderRoute: typeof AdminReportsRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/results': {
-      id: '/admin/results'
+    '/bode/results': {
+      id: '/bode/results'
       path: '/results'
-      fullPath: '/admin/results'
+      fullPath: '/bode/results'
       preLoaderRoute: typeof AdminResultsRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/settings': {
-      id: '/admin/settings'
+    '/bode/settings': {
+      id: '/bode/settings'
       path: '/settings'
-      fullPath: '/admin/settings'
+      fullPath: '/bode/settings'
       preLoaderRoute: typeof AdminSettingsRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/support': {
-      id: '/admin/support'
+    '/bode/support': {
+      id: '/bode/support'
       path: '/support'
-      fullPath: '/admin/support'
+      fullPath: '/bode/support'
       preLoaderRoute: typeof AdminSupportRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/trade': {
-      id: '/admin/trade'
+    '/bode/trade': {
+      id: '/bode/trade'
       path: '/trade'
-      fullPath: '/admin/trade'
+      fullPath: '/bode/trade'
       preLoaderRoute: typeof AdminTradeRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/users': {
-      id: '/admin/users'
+    '/bode/users': {
+      id: '/bode/users'
       path: '/users'
-      fullPath: '/admin/users'
+      fullPath: '/bode/users'
       preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/verify': {
-      id: '/admin/verify'
+    '/bode/verify': {
+      id: '/bode/verify'
       path: '/verify'
-      fullPath: '/admin/verify'
+      fullPath: '/bode/verify'
       preLoaderRoute: typeof AdminVerifyRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/withdrawals': {
-      id: '/admin/withdrawals'
+    '/bode/withdrawals': {
+      id: '/bode/withdrawals'
       path: '/withdrawals'
-      fullPath: '/admin/withdrawals'
+      fullPath: '/bode/withdrawals'
       preLoaderRoute: typeof AdminWithdrawalsRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/users/$userId': {
-      id: '/admin/users/$userId'
+    '/bode/users/$userId': {
+      id: '/bode/users/$userId'
       path: '/$userId'
-      fullPath: '/admin/users/$userId'
+      fullPath: '/bode/users/$userId'
       preLoaderRoute: typeof AdminUsersUserIdRouteImport
       parentRoute: typeof AdminUsersRoute
     }
