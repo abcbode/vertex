@@ -1,0 +1,38 @@
+{
+  "url": "http://127.0.0.1:8080/admin",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "VERTEX",
+      "hasCanvas": false,
+      "bodyTextLen": 117,
+      "bodyTextHash": "b330c304d2be99f281887a5c3fe7139c393b279fc1132fc6e01acfd8e172c9cd",
+      "bodyTextPrefix": "VERTEX KHU VỰC QUẢN TRỊ Đăng nhập admin Nhập tài khoản và mật kh",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/admin-fixed.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "VERTEX",
+      "hasCanvas": false,
+      "bodyTextLen": 117,
+      "bodyTextHash": "b330c304d2be99f281887a5c3fe7139c393b279fc1132fc6e01acfd8e172c9cd",
+      "bodyTextPrefix": "VERTEX KHU VỰC QUẢN TRỊ Đăng nhập admin Nhập tài khoản và mật kh",
+      "horizontalOverflow": false,
+      "consoleErrors": [
+        "A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:\n\n- A server/client branch `if (typeof window !== 'undefined')`.\n- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.\n- Date formatting in a user's locale which doesn't match the server.\n- External changing data without sending a snapshot of it along with the HTML.\n- Invalid HTML tag nesting.\n\nIt can also happen if the client has a browser extension installed which messes with the HTML before React loaded.\n\n%s%s https://react.dev/link/hydration-mismatch \n\n  ...\n    <SafeFragment>\n      <SafeFragment fallback={null}>\n        <CatchBoundary getResetKey={function getResetKey} errorComponent={function AppErrorComponent} ...>\n          <SafeFragment fallback={function fallback}>\n            <MatchInnerImpl match={{id:\"/bode...\", ...}}>\n              <Lazy>\n                <Dash>\n                  <AdminShell>\n                    <AdminLoginForm onSuccess={function onSuccess}>\n                      <main className=\"grid min-h...\">\n                        <div className=\"w-full max...\">\n                          <Logo>\n                          <div>\n                          <h1>\n                          <p>\n                          <form onSubmit={function onSubmit} className=\"mt-6 space...\">\n                            <div className=\"space-y-1.5\">\n                              <Label>\n                              <Input id=\"admin-user\" autoComplete=\"username\" required={true} value=\"\" ...>\n                                <input\n                                  className=\"flex h-11 w-full rounded-md border border-input bg-background px-3 text-s...\"\n                                  id=\"admin-user\"\n                                  autoComplete=\"username\"\n                                  required={true}\n                                  value=\"\"\n                                  onChange={function onChange}\n-                                 style={{caret-color:\"transparent\"}}\n                                >\n                            <div className=\"space-y-1.5\">\n                              <Label>\n                              <Input id=\"admin-pass\" type=\"password\" autoComplete=\"current-pa...\" required={true} ...>\n                                <input\n                                  className=\"flex h-11 w-full rounded-md border border-input bg-background px-3 text-s...\"\n                                  id=\"admin-pass\"\n                                  type=\"password\"\n                                  autoComplete=\"current-password\"\n                                  required={true}\n                                  value=\"\"\n                                  onChange={function onChange}\n-                                 style={{caret-color:\"transparent\"}}\n                                >\n                            ...\n"
+      ],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/admin-fixed-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/admin-fixed.json"
+}

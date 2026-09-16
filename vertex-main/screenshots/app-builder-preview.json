@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "VERTEX",
+      "hasCanvas": false,
+      "bodyTextLen": 399,
+      "bodyTextHash": "9dfbbfb9a425033341c8fe771c465367d5f0bcd3272341b3151011aa87f7c70f",
+      "bodyTextPrefix": "VERTEX Trang chủ Trade Ví CSKH Tài khoản SÀN BINARY OPTIONS Đọc ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "VERTEX",
+      "hasCanvas": false,
+      "bodyTextLen": 399,
+      "bodyTextHash": "473847e8b1ebc821935ac8bd9028ae103a874f9c438dbf0e54c8778c9c6c82c8",
+      "bodyTextPrefix": "VERTEX SÀN BINARY OPTIONS Đọc nến. Đặt lệnh. Kết thúc trong giây",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}

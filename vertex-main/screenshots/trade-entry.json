@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/trade",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "VERTEX",
+      "hasCanvas": false,
+      "bodyTextLen": 23,
+      "bodyTextHash": "c15b384bb21a7b83bd9bfbde3f98fef16903830120483920431b9904ab225ac4",
+      "bodyTextPrefix": "VERTEX Đang tải VERTEX…",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/trade-entry.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "VERTEX",
+      "hasCanvas": false,
+      "bodyTextLen": 23,
+      "bodyTextHash": "c15b384bb21a7b83bd9bfbde3f98fef16903830120483920431b9904ab225ac4",
+      "bodyTextPrefix": "VERTEX Đang tải VERTEX…",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/trade-entry-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/trade-entry.json"
+}

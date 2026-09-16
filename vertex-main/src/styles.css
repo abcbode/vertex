@@ -1,0 +1,77 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  --color-background: #08090b;
+  --color-foreground: #e8eaed;
+  --color-card: #111318;
+  --color-card-foreground: #e8eaed;
+  --color-popover: #161a21;
+  --color-popover-foreground: #e8eaed;
+  --color-primary: #c5d0db;
+  --color-primary-foreground: #0a0c10;
+  --color-secondary: #1a1f28;
+  --color-secondary-foreground: #e8eaed;
+  --color-muted: #1a1f28;
+  --color-muted-foreground: #8b919c;
+  --color-accent: #1e2530;
+  --color-accent-foreground: #e8eaed;
+  --color-destructive: #e05656;
+  --color-destructive-foreground: #fff;
+  --color-border: #262c36;
+  --color-input: #262c36;
+  --color-ring: #9eb4c8;
+  --color-up: #3dba80;
+  --color-up-fg: #04150c;
+  --color-down: #e05656;
+  --color-down-fg: #1a0505;
+  --color-warn: #c9a227;
+  --color-steel: #7a9bb8;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius: 12px;
+  --font-sans: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html,
+  body {
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    min-height: 100%;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  input, textarea, select {
+    font: inherit;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.surface-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--color-foreground) 4%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--color-foreground) 4%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
